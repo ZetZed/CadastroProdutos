@@ -15,12 +15,12 @@ Este projeto é parte de uma atividade acadêmica na disciplina de Programação
 
 A atividade tem como propósito desenvolver as habilidades dos alunos em programação desktop, assim como em lidar com banco de dados e interfaces gráficas de usuário.
 
-##Sobre o programa Cadastro de Produtos
+## Sobre o programa Cadastro de Produtos
 O Cadastro de Produtos é um programa desenvolvido em Java com o objetivo de permitir o cadastro de produtos em um banco de dados MySQL. O programa é capaz de inserir, editar, excluir e listar produtos cadastrados.
 
 Para isso, utiliza-se a biblioteca Swing para a criação de interfaces gráficas, a biblioteca JDBC para o acesso ao banco de dados MySQL e a linguagem SQL para a criação e manipulação do banco de dados.
 
-O programa é executado a partir da classe src/view/TelaPrincipal.java e requer que o banco de dados esteja configurado localmente. O arquivo db/cadastro_produtos.sql é responsável pela criação da estrutura do banco de dados e tabelas.
+O programa é executado a partir da classe `src/view/TelaPrincipal.java` e requer que o banco de dados esteja configurado localmente. O arquivo `db/cadastro_produtos.sql` é responsável pela criação da estrutura do banco de dados e tabelas.
 
 #### Bibliotecas e Ferramentas Utilizadas
  - Java 8
@@ -28,16 +28,9 @@ O programa é executado a partir da classe src/view/TelaPrincipal.java e requer 
  - JDBC - biblioteca para acesso a banco de dados
  - MySQL - banco de dados utilizado no projeto
 
-
-#### Funcionalidades
-O programa permite cadastrar produtos em um banco de dados MySQL, a partir da inserção de informações como nome, preço e quantidade. O usuário pode listar todos os produtos cadastrados, bem como editar e excluir produtos existentes.
-
 #### Como utilizar
 Clone o repositório para sua máquina local.
 Configure o banco de dados MySQL localmente.
-Importe o arquivo db/cadastro_produtos.sql para criar a estrutura do banco de dados e tabelas.
-Configure o arquivo src/dao/Conexao.java com as informações de conexão com o banco de dados.
-Compile e execute o programa a partir da classe src/view/TelaPrincipal.java.
-
-#### Créditos
-Desenvolvido por mim, [Zet Zed](https://www.linkedin.com/in/zet-zed-644813197/), como atividade acadêmica na disciplina de Programação Desktop.
+Importe o arquivo `db/cadastro_produtos.sql` para criar a estrutura do banco de dados e tabelas.
+Configure o arquivo `src/dao/Conexao.java` com as informações de conexão com o banco de dados.
+Compile e execute o programa a partir da classe `src/view/TelaPrincipal.java`.
