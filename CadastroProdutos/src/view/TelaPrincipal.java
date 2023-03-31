@@ -5,13 +5,19 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import model.DAOProdutos;
+import model.Produto;
 
 //implements ActionListener
 public class TelaPrincipal extends JFrame  {
@@ -29,9 +35,16 @@ public class TelaPrincipal extends JFrame  {
     private JMenuItem item_cadastro;
     private JMenuItem item_sair;
     
-    public TelaPrincipal() {
+    private JList<Produto> lista;
+    private JScrollPane scroll_lista;
+    
+    private DAOProdutos dao;
+    
+    public TelaPrincipal() throws SQLException {
+        this.dao = DAOProdutos.getInstance();
         this.initialize();
         this.setExtendedState(NORMAL);
+        
     }
     
     //inicialização
@@ -56,6 +69,18 @@ public class TelaPrincipal extends JFrame  {
         this.setBounds(0, 0, 800, 400);
         this.setPreferredSize(new Dimension(800, 400));
 
+        //configuração da listagem
+        //configura o painel
+        lista = new JList<>();
+        
+        lista.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        lista.setLayoutOrientation(JList.VERTICAL);
+        lista.setModel(dao.list());
+        lista.setVisibleRowCount(-1);
+        
+        scroll_lista = new JScrollPane(lista);
+        panel.add(scroll_lista, BorderLayout.CENTER);
+        
         //adicao de elementos
         panel.add(label_title, BorderLayout.PAGE_START);
 
@@ -74,6 +99,19 @@ public class TelaPrincipal extends JFrame  {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TelaCadastro c = new TelaCadastro();
+            }
+        });
+        bt_deletar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obter o produto selecionado
+                Produto produtoSelecionado = lista.getSelectedValue();
+
+                if (produtoSelecionado != null) {
+                    // Remover o produto da lista e atualizar a interface gráfica
+                    dao.delete(produtoSelecionado.getId());
+                    lista.setModel(dao.list());
+                }
             }
         });
         

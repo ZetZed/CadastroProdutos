@@ -1,9 +1,11 @@
 package view;
 
-import cadastroprodutos.Produto;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -12,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import model.DAOProdutos;
 
 /**
  *
@@ -25,7 +28,6 @@ public class TelaCadastro extends JDialog{
     public TelaCadastro() {
         this.initialize();
         this.setModal(true);
-        this.setAlwaysOnTop(true);
     }
     
     //inicialização da janela
@@ -77,29 +79,62 @@ public class TelaCadastro extends JDialog{
         String button_cancela = "CANCELAR";
         JButton bt_cancel = new JButton(button_cancela);
         panel.add(bt_cancel);
+        
+        
 
         //Botão SALVAR
         bt_save.addActionListener((e) -> {
-            String selectedStatus = (String) statusComboBox.getSelectedItem();
-            int codigo = Integer.parseInt(codigoField.getText());
-            int codigoBarras = Integer.parseInt(codigoBarrasField.getText());
-            String referencia = referenciaField.getText();
-            String departamento = (String) departmentComboBox.getSelectedItem();
-            String nomeProduto = nomeProdutoField.getText();
-            String nomeAbreviado = nomeAbreviadoField.getText();
-            double preco = Double.parseDouble(precoField.getText());
-            double custo = Double.parseDouble(custoField.getText());
-            double margem = Double.parseDouble(margemField.getText());
+          
+            Thread t = new Thread(() -> {
+            
+                try {
+                    String selectedStatus = (String) statusComboBox.getSelectedItem();
+                    int codigo = Integer.parseInt(codigoField.getText());
+                    int codigoBarras = Integer.parseInt(codigoBarrasField.getText());
+                    String referencia = referenciaField.getText();
+                    String departamento = (String) departmentComboBox.getSelectedItem();
+                    String nomeProduto = nomeProdutoField.getText();
+                    String nomeAbreviado = nomeAbreviadoField.getText();
+                    double preco = Double.parseDouble(precoField.getText());
+                    double custo = Double.parseDouble(custoField.getText());
+                    double margem = Double.parseDouble(margemField.getText());
 
-            Produto produto = new Produto(selectedStatus, codigo, codigoBarras, referencia, departamento, nomeProduto, nomeAbreviado, preco, custo, margem);                        
-            JOptionPane.showMessageDialog(null, "SALVO COM SUCESSO!!!\nStatus: " + produto.getSelectedStatus() + "\nNome: " + produto.getNomeProduto() + "\nDepartamento: " + produto.getDepartamento() + "\nCódigo: " + produto.getCodigo() + "\nPreço: " + produto.getPreco());
+                    // verifique se todos os campos obrigatórios estão preenchidos
+                    if (codigoField.getText().isEmpty() || codigoBarrasField.getText().isEmpty() || nomeProdutoField.getText().isEmpty() || precoField.getText().isEmpty() || custoField.getText().isEmpty() || margemField.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                DAOProdutos dao = DAOProdutos.getInstance();
+                dao.save(selectedStatus, codigo, codigoBarras, referencia, departamento, nomeProduto, nomeAbreviado, preco, custo, margem);
+
+                String msg = "SALVO!";
+                System.out.println(msg);
+                    JOptionPane.showMessageDialog(null, "SALVO COM SUCESSO!!!");
+                dispose();
+
+                } 
+                catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Digite um número válido", "Erro", JOptionPane.ERROR_MESSAGE);
+                } 
+                catch (SQLException ex) {
+                    Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Erro ao salvar os dados no banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+            t.start();
         });
-        
+            
         //Botão CANCELAR
         bt_cancel.addActionListener(e -> {
             dispose();
-            TelaPrincipal telaPrincipal = new TelaPrincipal();
-            telaPrincipal.setVisible(true);
+            TelaPrincipal telaPrincipal;
+            try {
+                telaPrincipal = new TelaPrincipal();
+                telaPrincipal.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
+            }    
         });
         
         //seta o tamanho e a posição da janela
