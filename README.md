@@ -25,7 +25,7 @@ Para isso, utiliza-se a biblioteca Swing para a criação de interfaces gráfica
 
 O programa é executado a partir da classe `src/view/TelaPrincipal.java` e requer que o banco de dados esteja configurado localmente. 
 
-#### Bibliotecas e Ferramentas Utilizadas
+## Bibliotecas e Ferramentas Utilizadas
  - Java 8
  - Swing - biblioteca gráfica para criação de interfaces gráficas de usuário
  - JDBC - biblioteca para acesso a banco de dados
