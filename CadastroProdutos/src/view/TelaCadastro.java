@@ -110,7 +110,7 @@ public class TelaCadastro extends JDialog{
 
                 String msg = "SALVO!";
                 System.out.println(msg);
-                    JOptionPane.showMessageDialog(null, "SALVO COM SUCESSO!!!");
+                JOptionPane.showMessageDialog(null, "SALVO COM SUCESSO!!!");
                 dispose();
 
                 } 

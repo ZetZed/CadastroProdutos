@@ -102,6 +102,37 @@ public class DAOProdutos {
         }
         return null;
     }
+    
+    public boolean update(Produto produto) {
+        String sql = "UPDATE produtos SET status = ?, codigo = ?, codigoBarras = ?, referencia = ?, departamento = ?, nomeProduto = ?, nomeAbreviado = ?, preco = ?, custo = ?, margem = ? WHERE id = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, produto.getSelectedStatus());
+            stmt.setInt(2, produto.getCodigo());
+            stmt.setInt(3, produto.getCodigoBarras());
+            stmt.setString(4, produto.getReferencia());
+            stmt.setString(5, produto.getDepartamento());
+            stmt.setString(6, produto.getNomeProduto());
+            stmt.setString(7, produto.getNomeAbreviado());
+            stmt.setDouble(8, produto.getPreco());
+            stmt.setDouble(9, produto.getCusto());
+            stmt.setDouble(10, produto.getMargem());
+            stmt.setInt(11, produto.getId());
+            //stmt.executeUpdate();
+
+            // Executa a instrução SQL e verifica se a atualização foi bem-sucedida
+            int linhasAfetadas = stmt.executeUpdate();
+            if (linhasAfetadas == 1) {
+                // Atualização bem-sucedida
+                return true;
+            } else {
+                // Atualização mal-sucedida
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar produto: " + e.getMessage());
+            return false;
+        }
+    }
 
     public void delete(int id) {
         try{

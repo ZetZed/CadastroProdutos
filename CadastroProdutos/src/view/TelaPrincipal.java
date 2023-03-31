@@ -26,6 +26,7 @@ public class TelaPrincipal extends JFrame  {
     private JPanel panel;
     private JPanel panel_botoes;
     private JButton bt_novo;
+    private JButton bt_editar;
     private JButton bt_deletar;
     private JButton bt_sair;
     private JLabel label_title;
@@ -51,6 +52,7 @@ public class TelaPrincipal extends JFrame  {
     public void initialize(){
         //botões
         bt_novo = new JButton("Novo");
+        bt_editar = new JButton("Editar");
         bt_deletar = new JButton("Apagar");
         bt_sair = new JButton("Sair");
         //título
@@ -101,6 +103,26 @@ public class TelaPrincipal extends JFrame  {
                 TelaCadastro c = new TelaCadastro();
             }
         });
+        
+        bt_editar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obter o produto selecionado
+                Produto produtoSelecionado = lista.getSelectedValue();
+
+                if (produtoSelecionado != null) {
+                    // Abrir a tela de edição do produto
+                    TelaEdicao telaEdicao = new TelaEdicao(produtoSelecionado, dao, lista);
+                    telaEdicao.setVisible(true);
+
+                    // Se o produto foi editado, atualiza a lista
+                    if (telaEdicao.isProdutoAtualizado()) {
+                        lista.setModel(dao.list());
+                    }
+                }
+            }
+        });
+        
         bt_deletar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -133,6 +155,7 @@ public class TelaPrincipal extends JFrame  {
         });
         //adiciona
         panel_botoes.add(bt_novo);
+        panel_botoes.add(bt_editar);
         panel_botoes.add(bt_deletar);
         panel_botoes.add(bt_sair);
         //coloca o subpainel no painel-mae
