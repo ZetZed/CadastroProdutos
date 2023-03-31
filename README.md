@@ -10,7 +10,7 @@
 #### Aluno
 - [Zet Zed](https://www.linkedin.com/in/zet-zed-644813197/)
 
-##Sobre a atividade
+## Sobre a atividade
 Este projeto é parte de uma atividade acadêmica na disciplina de Programação Desktop, com o objetivo de aplicar os conceitos aprendidos nas aulas na criação de um programa utilizando interface gráfica, caixas de diálogo, janela, escutando e reagindo a eventos, criando a tela de cadastro, introdução ao JDBC e listando os dados na tela principal.
 
 A atividade tem como propósito desenvolver as habilidades dos alunos em programação desktop, assim como em lidar com banco de dados e interfaces gráficas de usuário.
